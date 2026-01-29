@@ -27,7 +27,7 @@ clean:
 # Test the API
 test:
 	@echo "Testing health endpoint..."
-	@curl -s http://localhost:3000/health | jq
+	@curl -s http://localhost:4000/health | jq
 	@echo "\nAPI is ready for face comparison!"
 
 # Build and run
