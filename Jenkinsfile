@@ -8,7 +8,6 @@ pipeline {
                 sh 'npm install'
             }
         }
-    }
 
         stage('Test') {
             steps {
@@ -35,9 +34,10 @@ pipeline {
                     echo 'Logging in to Docker Hub...'
                     sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
 
-                echo 'Pushing the docker image to Docker Hub...'
-                sh 'docker push rwigaara/my-facial-recognition-app'
+                    echo 'Pushing the docker image to Docker Hub...'
+                    sh 'docker push rwigaara/my-facial-recognition-app'
                     }
                 }
         }
+    }
 }
