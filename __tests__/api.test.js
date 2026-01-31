@@ -56,7 +56,7 @@ function createTestApp() {
         success: true,
         match: false,
         distance: 0.6234,
-        similarity: 37.77,
+        similarity: 37.77, 
         threshold: 0.5,
         confidence: 'low',
         processingTimeMs: 1234
