@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the docker image...'
-                sh 'docker build -t rwigaara/my-facial-recognition-app  .'
+                sh 'docker build -t rwigara/my-facial-recognition-app  .'
             }
         }
 
