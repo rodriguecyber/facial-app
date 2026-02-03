@@ -295,7 +295,7 @@ app.post("/compare", async (req, res) => {
 });
 app.post("/detect", async (req, res) => {
   const requestId = Date.now();
-  console.log(`\n🔍 [${requestId}] face detect request`);
+  console.log(`\n🔍 [${requestId}] face detect request`); 
   
   const startTime = Date.now();
   
