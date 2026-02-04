@@ -1,8 +1,10 @@
 pipeline {
-  agent any
-
-  tools {
-        nodejs "nodejs"
+  agent {
+        docker {
+            image 'node:18-alpine'
+            // Ensure the image is always fresh
+            alwaysPull true 
+        }
     }
     stages {
        
