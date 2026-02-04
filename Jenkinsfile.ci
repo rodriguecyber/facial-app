@@ -33,7 +33,7 @@ pipeline {
                         sh 'docker pull $UNAME/my-facial-recognition-app'
                         sh 'docker run -d -p 3008:4000 $UNAME/my-facial-recognition-app'
                     }}
-            }
+            } 
         }
     }
 }
