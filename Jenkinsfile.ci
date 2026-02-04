@@ -24,5 +24,18 @@ pipeline {
                 }
             }
         }
+        // cd pipelines
+        stage('ssh into target sevr')
+        stage('pull Image') {
+            steps {
+                sshagent(['ec2-ssh']) {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PSWD', usernameVariable: 'UNAME')]) {
+                        sh 'echo $PSWD | docker login -u $UNAME --password-stdin'
+                        sh 'docker pull $UNAME/my-facial-recognition-app'
+                        sh 'docker run -d -p 80:3000 $UNAME/my-facial-recognition-app'
+                    }
+                }
+            }
+        }
     }
 }
