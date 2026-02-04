@@ -1,27 +1,26 @@
 version: "3.9"
 
 services:
-  faceapi:
+  nodejs-app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: face-comparison-api-demo:latest
-    container_name: face-api-service
+    image: simple-nodejs-app:latest
+    container_name: simple-nodejs-service
     ports:
       - "4000:4000"
     environment:
       - NODE_ENV=production
-      - TF_CPP_MIN_LOG_LEVEL=2
       - PORT=4000
     restart: unless-stopped
     deploy:
       resources:
         limits:
-          cpus: '2.0'
-          memory: 2G
-        reservations:
           cpus: '1.0'
-          memory: 1G
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
     logging:
       driver: "json-file"
       options:
@@ -32,4 +31,4 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 5s

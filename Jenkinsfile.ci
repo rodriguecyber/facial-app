@@ -1,5 +1,11 @@
 pipeline {
-  agent any
+  agent {
+        docker {
+            image 'node:18-alpine'
+            // Ensure the image is always fresh
+            alwaysPull true
+            }
+    }
     stages {
        
         stage('Install Dependencies') {
