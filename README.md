@@ -1,31 +1,35 @@
-# Facial Recognition API
+# Simple Node.js App
 
-A simple Node.js API for comparing faces using face-api.js.
+A simple Node.js application with Express.js.
 
 ## Features
 
-- Face comparison between two images
+- Hello World endpoint
 - Health check endpoint
 - Docker support
+- Unit tests with Jest
 
 ## API Endpoints
 
-### GET /health
-Returns the health status of the service.
-
-### POST /compare
-Compares two uploaded images and returns similarity score.
-
-**Request:**
-- `image1`: First image file
-- `image2`: Second image file
+### GET /
+Returns a hello world message.
 
 **Response:**
 ```json
 {
-  "similarity": 0.85,
-  "distance": 0.15,
-  "match": true
+  "message": "Hello World!"
+}
+```
+
+### GET /health
+Returns the health status of the service.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "timestamp": "2023-10-01T12:00:00.000Z",
+  "uptime": 123
 }
 ```
 
@@ -43,6 +47,12 @@ npm start
 
 The server will run on port 4000.
 
+## Running Tests
+
+```bash
+npm test
+```
+
 ## Running with Docker
 
 ```bash
@@ -52,4 +62,3 @@ docker-compose up --build
 ## Requirements
 
 - Node.js >= 18.0.0
-- Models are automatically downloaded on first run
