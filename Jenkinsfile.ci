@@ -1,16 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('Install Dependencies and test') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    // Ensure the image is always fresh
-                    alwaysPull true
-                }
-            }
+        stage('Checkout Code') {
             steps {
-                sh ' npm install --cache ./.npm-cache'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/rodriguecyber/facial-app.git']])
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
                 sh 'npm test'
             }
         }
@@ -25,17 +29,19 @@ pipeline {
             }
         }
         // cd pipelines
-        stage('ssh into target sevr') {
+        stage('ssh into target sever') {
             steps {
                 sshagent(['ec2-ssh']) {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PSWD', usernameVariable: 'UNAME')]) {
-                        sh '''
-        ssh -o StrictHostKeyChecking=no ec2-user@<EC2_PUBLIC_IP> '
-            docker login -u $UNAME --password-stdin <<< "$PSWD"
-            docker pull $UNAME/my-facial-recognition-app
-            docker run -d -p 3008:4000 $UNAME/my-facial-recognition-app
-        '
-    '''
+                        sh """
+                ssh -o StrictHostKeyChecking=no ec2-user@<'${EC2_PUBLIC_IP}'> "
+                    echo '${PSWD}' | docker login -u '${UNAME}' --password-stdin
+                    docker pull ${UNAME}/my-facial-recognition-app
+                    docker stop my-app || true
+                    docker rm my-app || true
+                    docker run -d --name my-app -p 3008:4000 ${UNAME}/my-facial-recognition-app
+                "
+                """
                     }}
                 }
             }

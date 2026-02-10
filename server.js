@@ -3,15 +3,12 @@ import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Middleware to parse JSON
 app.use(express.json());
 
-// Simple hello endpoint
 app.get('/', (req, res) => {
   res.json({ message: 'Hello World!' });
 });
 
-// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -20,7 +17,6 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Error handling middleware
 app.use((error, req, res, next) => {
   console.error(error);
   res.status(500).json({ error: 'Internal server error' });

@@ -1,24 +1,14 @@
-# Use Node.js LTS slim for smaller image size
 FROM node:18-slim
 
-# Set production environment variables
 ENV NODE_ENV=production
 
-# Install only required system dependencies (minimal)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
-
-# Set working directory
 WORKDIR /app
 
 # Copy package files first (for better caching)
 COPY package*.json ./
 
 # Install production dependencies only
-RUN npm ci --only=production --no-audit --no-fund \
-    && npm cache clean --force
+RUN npm  install   &&  node --experimental-vm-modules node_modules/jest/bin/jest.js
 
 # Copy application code
 COPY server.js ./
