@@ -35,8 +35,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PSWD', usernameVariable: 'UNAME')]) {
                      
                         sh """
-                      ssh-keyscan -H 13.60.72.194 >> ~/.ssh/known_hosts
-                     ssh  ubuntu@'${EC2_PUBLIC_IP}' "
+                      
+                     ssh -o StrictHostKeyChecking=no  ubuntu@'${EC2_PUBLIC_IP}' "
                     echo '${PSWD}' | docker login -u '${UNAME}' --password-stdin
                     docker pull ${UNAME}/my-facial-recognition-app
                     docker stop my-app || true
